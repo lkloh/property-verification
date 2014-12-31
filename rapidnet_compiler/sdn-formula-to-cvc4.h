@@ -10,7 +10,6 @@
 #include <string>
 #include <iostream>
 #include <sstream>
-//#include "smt/smt_engine.h" 
 #include <cvc4/cvc4.h>     
 #include "sdn-formula.h"
 #include <typeinfo>

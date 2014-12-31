@@ -1,6 +1,10 @@
 #include <iostream>
-#include <string>
-#include <cvc4/cvc4.h>
+#include <cvc4/cvc4.h> 
+//#include "smt/smt_engine.h"
+#include "rapidnet_compiler/sdn-formula.h"
+//#include "rapidnet_compiler/sdn-formula-to-cvc4.h"
+
+using namespace std;
 using namespace CVC4;
 
 int main() {
