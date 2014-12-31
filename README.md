@@ -1,6 +1,8 @@
 property-verification
 =====================
 
+Install CVC4
+
 Run testing
 
     g++ -std=c++11 testing.cpp -o testing -lcvc4
