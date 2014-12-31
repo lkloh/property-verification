@@ -3,7 +3,7 @@ property-verification
 
 Run testing
 
-   g++ -std=c++11 testing.cpp -o testing -lcvc4
+    g++ -std=c++11 testing.cpp -o testing -lcvc4
 
 Run linear_arith.cpp
 
