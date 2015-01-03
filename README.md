@@ -1,38 +1,29 @@
 property-verification
 =====================
      
-MacOS
------
+Install CVC4 on MacOS
+---------------------
 
-Download gmp-6.0.0 and put it somewhere where you can find the folder. It can't be installed properly yet on Mac for some reason (let me know if you can!)
+1. Get [GMP](https://gmplib.org/) and install it. 
+2. [Get native CVC4](http://cvc4.cs.nyu.edu/downloads/)
+2. [Installing CVC4 to run examples](http://cvc4.cs.nyu.edu/wiki/Building_CVC4_from_source)
 
 To run the codes, put `rapidnet` somewhere on your folder. cd into `property-verification`. To run `test-program.cc`, type
 
-    g++ -I/Users/lkloh/Downloads/cvc4-1.4/src/smt linear_arith.cc -o linear_arith -lcvc4
+    g++ -std=c++11 -I[path-to-rapidnet-folder]/rapidnet/src/rapidnet-compiler/sdn-formula.h -L[path-to-rapidnet-folder]/rapidnet/src/rapidnet-compiler/sdn-formula.cc [FILE-TO-RUN].cc -L/ -o [FILE-TO-RUN] -lcvc4
+    
+On my environment, that would be
+    
+    g++ -std=c++11 -I/Users/lkloh/rapidnet/src/rapidnet-compiler/sdn-formula.h -L/Users/lkloh/rapidnet/src/rapidnet-compiler/sdn-formula.cc linear_arith.cpp -o linear_arith -lcvc4
+    
+    for example
     
 Resources
 ---------
 * [CVC4 C++ Library - examples](http://church.cims.nyu.edu/wiki/Tutorials#linear_arith)
 * [API Documentation](http://cvc4.cs.nyu.edu/doc/index.html)
 
-Installing CVC4
----------------
 
-Install the dependency [gmplib](https://gmplib.org/) with superuser privilege for EVERY command, or there may be trouble. 
-
-Install cvc4. First get the ANTLR3 library by running
-
-    sh contrib/get-antlr-3.4
-    
-Follow the instructions that appear and the run 
-
-    ./configure --with-antlr-dir=/Users/lkloh/property-verification/antlr-3.4 ANTLR=/Users/lkloh/property-verification/antlr-3.4/bin/antlr3
-    
-    sudo make 
-    
-    sudo make check
-    
-    sudo make install
 
 Running the examples
 --------------------
@@ -54,8 +45,8 @@ and follow the cvc4 instructions within the folder.
 Run everything with superuser privilege, or trouble may occur. 
 
 
-Install CVC4
-------------
+Running examples in property-verification
+-----------------------------------------
 
 Run testing
 
