@@ -40,10 +40,12 @@ public:
 	virtual int GetValue() { //dummy return
 		return 0;
 	}
+	
+	virtual void PrintTerm(){}
 };
 
 
-int varCount = 0;
+
 
 class Variable: public Term
 {
@@ -53,17 +55,15 @@ public:
 		BOOL,
 		INT,
 		DOUBLE,
-		STRING
+		STRING,
+		LIST
 	};
 
 	/*
 	 * t: BOOL/INT/DOUBLE/STRING type
 	 * b: free or bound variable?
 	 */
-	Variable(TypeCode t, bool b):varType(t),isbound(b){
-		varCount = varCount+1;
-		name =  "variable"+std::to_string(varCount);
-	}
+	Variable(TypeCode t, bool b);
 
 	virtual ~Variable(){}
 
@@ -79,10 +79,13 @@ public:
 		return isbound;
 	}
 
+	void PrintTerm();
+
 private:
 	string name;
 	TypeCode varType;
 	bool isbound;
+	static int varCount;
 };
 
 
@@ -106,6 +109,8 @@ public:
 	Variable::TypeCode GetRangeType() {
 		return range;
 	}
+
+	void PrintSchema();
 
 private:
 	string name;
@@ -131,6 +136,8 @@ public:
 		return args;
 	}
 
+	void PrintTerm();
+
 private:
 	FunctionSchema* schema;
 	vector<Term*> args;
@@ -146,6 +153,8 @@ class Value: public Term
 {
 public:
 	virtual ~Value(){}
+
+        virtual void PrintTerm(){}
 };
 
 class IntVal: public Value
@@ -158,6 +167,8 @@ public:
 	int GetIntValue() {
 		return value;
 	}
+
+	void PrintTerm();
 
 private:
 	int value;
@@ -174,6 +185,8 @@ public:
 		return value;
 	}
 
+	void PrintTerm();	
+
 private:
 	double value;
 };
@@ -189,6 +202,8 @@ public:
 		return value;
 	}
 
+	void PrintTerm();	
+
 private:
 	string value;
 };
@@ -203,6 +218,8 @@ public:
 	bool GetBoolValue() {
 		return value;
 	}
+
+	void PrintTerm();
 
 private:
 	bool value;
@@ -233,6 +250,10 @@ public:
 	Term* GetRightE() {
 		return rightE;
 	}
+
+	void PrintTerm();
+
+	void PrintOp();
 
 private:
 	ArithOp op;
@@ -417,7 +438,7 @@ public:
 	Constraint(Operator opt, Term* exprL, Term* exprR):
 		op(opt),leftE(exprL),rightE(exprR){}
 
-	~Constraint(){}
+	~Constraint();
 
 	Operator GetOperator() {
 		return op;
@@ -430,6 +451,10 @@ public:
 	Term* GetRightE() {
 		return rightE;
 	}
+
+	void PrintConstraint();
+
+	void PrintOp();
 
 private:
 	Operator op;
@@ -450,4 +475,8 @@ private:
 
 
 /* END OF FILE */
- 
+
+
+
+
+
