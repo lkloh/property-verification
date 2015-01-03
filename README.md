@@ -1,15 +1,5 @@
 property-verification
 =====================
-
-
-Ubuntu
-------
-
-To run the codes, install Rapidnet and cd into this folder. For example, to run `helloworld.cpp`, type
-
-     g++ -I/home/lkloh/rapidnet/src/rapidnet-compiler -L/home/lkloh/rapidnet/src/rapidnet-compiler helloworld.cpp -o helloworld -lcvc4
-     
-     g++ -I/Users/lkloh/rapidnet/src/rapidnet-compiler 
      
 MacOS
 -----
