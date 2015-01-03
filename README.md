@@ -10,7 +10,7 @@ Install CVC4 on MacOS
 
 To run the codes, put `rapidnet` somewhere on your folder. cd into `property-verification`. To run `test-program.cc`, type
 
-    g++ -std=c++11 [FILE-TO-RUN].cc -L/ -o [FILE-TO-RUN] -lcvc4
+    g++ -std=c++11 [FILE-TO-RUN].cc -L/ -o [FILE-TO-RUN] -lcvc4 -lgmp
    
     
 Resources
