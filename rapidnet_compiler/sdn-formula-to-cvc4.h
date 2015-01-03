@@ -12,7 +12,7 @@
 #include <sstream>
 #include <cvc4/cvc4.h>     
 #include "sdn-formula.h"
-#include <typeinfo>
+//#include <typeinfo>
 
 using namespace CVC4;
 
