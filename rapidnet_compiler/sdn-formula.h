@@ -5,8 +5,6 @@
  *      Author: Chen
  */
 
-#ifndef SDN_FORMULA_H_
-#define SDN_FORMULA_H_
 
 #include <vector>
 #include <string>
@@ -14,10 +12,6 @@
 #include <sstream>
 
 using namespace std;
-
-
-
-
 
 
 /* 
@@ -79,7 +73,9 @@ public:
 		return isbound;
 	}
 
-	void PrintTerm();
+	void PrintTerm() {
+		cout << name;
+	}
 
 private:
 	string name;
@@ -167,8 +163,6 @@ public:
 	int GetIntValue() {
 		return value;
 	}
-
-	void PrintTerm();
 
 private:
 	int value;
@@ -469,9 +463,6 @@ private:
  *                                                                                  *
  * ******************************************************************************** *
  */
-
-#endif /* SDN_FORMULA_H_ */
-
 
 
 /* END OF FILE */
