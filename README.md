@@ -9,6 +9,8 @@ To run the codes, install Rapidnet and cd into this folder. For example, to run 
 
      g++ -I/home/lkloh/rapidnet/src/rapidnet-compiler -L/home/lkloh/rapidnet/src/rapidnet-compiler helloworld.cpp -o helloworld -lcvc4
      
+     g++ -I/Users/lkloh/rapidnet/src/rapidnet-compiler 
+     
 MacOS
 -----
 
@@ -73,3 +75,26 @@ Run linear_arith.cpp
 
     g++ -std=c++11 linear_arith.cpp -o linear_arith -lcvc4
 
+6) Using the data-structures
+----------------------------
+
+`-I`: indicates the location of the header files
+
+`-l`: indicates we want to use the CVC4 libraries
+
+`-L`: where the implementation of the header files can be found
+
+    Run g++ -I<path-to-rapidnet>/src/rapidnet-compiler -<path-to-rapidnet>/lkloh/rapidnet/src/rapidnet-compiler <file-using-data-structures>.cc -o <file-using-data-structures> -lcvc4
+
+Example: I clone this folder to my home directory, with path `/home/lkloh`. To run the file `hellpeworld.cpp` which sources the data structure files from rapidnet, I cd into the location where `helloworld.cpp` may be found, and type:
+
+    g++ -I/home/lkloh/rapidnet/src/rapidnet-compiler -L/home/lkloh/rapidnet/src/rapidnet-compiler helloworld.cpp -o helloworld -lcvc4
+
+7) Remove DS_Store before pushing.
+----------------------------------
+
+At the top level of the repository, type
+
+    find . -name .DS_Store -print0 | xargs -0 git rm -f --ignore-unmatch
+    
+As suggested [here](http://stackoverflow.com/questions/107701/how-can-i-remove-ds-store-files-from-a-git-repository).
