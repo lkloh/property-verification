@@ -1,7 +1,7 @@
 #include <iostream>
 #include <cvc4/cvc4.h> 
 #include "rapidnet_compiler/sdn-formula.h"
-#include "rapidnet_compiler/sdn-formula-to-cvc4.h"
+//#include "rapidnet_compiler/sdn-formula-to-cvc4.h"
 
 using namespace std;
 using namespace CVC4;
