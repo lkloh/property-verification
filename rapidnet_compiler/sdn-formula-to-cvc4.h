@@ -53,7 +53,6 @@ void clearAllVariables() {
 
 Expr makeVariableType(ExprManager* em, Type varType, bool isbound, Variable* v) {
 	string varname = v->GetVariableName();
-	//std::cout << "NAME: " << varname << std::endl;
 	if (isbound) {
 		Expr var = em->mkBoundVar(varname, varType);
 		all_variables[v] = var;

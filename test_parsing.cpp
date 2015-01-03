@@ -17,8 +17,7 @@
 
 #include <iostream>
 #include <cvc4/cvc4.h> 
-//#include "smt/smt_engine.h"
-#include "rapidnet_compiler/sdn-formula.h"
+#include "rapidnet_compiler/sdn-formula.cc"
 #include "rapidnet_compiler/sdn-formula-to-cvc4.h"
 
 using namespace std;
@@ -432,15 +431,15 @@ void nested_function_check() {
 
 int main() {
     testIntegersArithmetic();
-    testVariables();
-    testBoundVariables();
-    testBoundPredicate();
-    testArithmeticNestedQuantifier();
-    connective__x_gt_y__AND__y_gt_z__IMPLIES__x_gt_z();
-    arithmetic__4_plus_3__minus__2_plus_1__equals__4();
-    quantifier__predicate__ancestor();
-    quantifier__function_child_younger_than_mother();
-    nested_function_check();
+    // testVariables();
+    // testBoundVariables();
+    // testBoundPredicate();
+    // testArithmeticNestedQuantifier();
+    // connective__x_gt_y__AND__y_gt_z__IMPLIES__x_gt_z();
+    // arithmetic__4_plus_3__minus__2_plus_1__equals__4();
+    // quantifier__predicate__ancestor();
+    // quantifier__function_child_younger_than_mother();
+    // nested_function_check();
     return 0;
 }
 
