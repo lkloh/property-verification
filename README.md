@@ -10,13 +10,8 @@ Install CVC4 on MacOS
 
 To run the codes, put `rapidnet` somewhere on your folder. cd into `property-verification`. To run `test-program.cc`, type
 
-    g++ -std=c++11 -I[path-to-rapidnet-folder]/rapidnet/src/rapidnet-compiler/sdn-formula.h -L[path-to-rapidnet-folder]/rapidnet/src/rapidnet-compiler [FILE-TO-RUN].cc -L/ -o [FILE-TO-RUN] -lcvc4
-    
-On my environment, that would be
-    
-    g++ -std=c++11 -I/Users/lkloh/rapidnet/src/rapidnet-compiler/sdn-formula.h -L/Users/lkloh/rapidnet/src/rapidnet-compiler linear_arith.cpp -o linear_arith -lcvc4
-    
-for example
+    g++ -std=c++11 [FILE-TO-RUN].cc -L/ -o [FILE-TO-RUN] -lcvc4
+   
     
 Resources
 ---------
