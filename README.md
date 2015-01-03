@@ -16,7 +16,7 @@ On my environment, that would be
     
     g++ -std=c++11 -I/Users/lkloh/rapidnet/src/rapidnet-compiler/sdn-formula.h -L/Users/lkloh/rapidnet/src/rapidnet-compiler/sdn-formula.cc linear_arith.cpp -o linear_arith -lcvc4
     
-    for example
+for example
     
 Resources
 ---------
