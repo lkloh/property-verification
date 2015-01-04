@@ -278,11 +278,26 @@ public:
 	}
 
 	void PrintTerm() {
-
+		leftE->PrintTerm();
+  		PrintOp();
+  		rightE->PrintTerm();
 	}
 
 	void PrintOp() {
-
+		switch(op) {
+			case Arithmetic::PLUS:
+			    cout << "+";
+			    break;
+			case Arithmetic::MINUS:
+			    cout << "-";
+			    break;
+			case Arithmetic::TIMES:
+			    cout << "*";
+			    break;
+			case Arithmetic::DIVIDE:
+			    cout << "/";
+			    break;
+		}  
 	}
 
 private:
