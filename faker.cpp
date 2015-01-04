@@ -40,13 +40,13 @@ void testIntegersArithmetic() {
     Constraint three_plus_four_equals_seven_rapidnet = Constraint(Constraint::EQ, &three_plus_four_rapidnet, &seven);
 
     /* CVC4*/
-    //Expr three_plus_four_cvc4 = parseTerm(&em, &three_plus_four_rapidnet);
-    //Expr three_plus_four_equals_seven_cvc4 = parseFormula(&em, &three_plus_four_equals_seven_rapidnet); 
+    Expr three_plus_four_cvc4 = parseTerm(&em, &three_plus_four_rapidnet);
+    Expr three_plus_four_equals_seven_cvc4 = parseFormula(&em, &three_plus_four_equals_seven_rapidnet); 
 
     /* CHECKING PARSING */
-    //std::cout << "\n" << three_plus_four_equals_seven_cvc4 << " is: " << smt.query(three_plus_four_equals_seven_cvc4) << std::endl;
+    std::cout << "\n" << three_plus_four_equals_seven_cvc4 << " is: " << smt.query(three_plus_four_equals_seven_cvc4) << std::endl;
 
-    //clearAllVariables();
+    clearAllVariables();
 }
 
 
