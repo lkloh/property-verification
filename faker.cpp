@@ -207,12 +207,162 @@ void testArithmeticNestedQuantifier() {
     clearAllVariables();
 }
 
+/*
+ * ((x > y) /\ (y > z)) => (x > z)
+ */
+void connective__x_gt_y__AND__y_gt_z__IMPLIES__x_gt_z() {
+    ExprManager em;
+    SmtEngine smt(&em);
+
+    /* RAPIDNET */
+    Variable x = Variable(Variable::INT, false);
+    Variable y = Variable(Variable::INT, false);
+    Variable z = Variable(Variable::INT, false);
+
+    Constraint x_gt_y = Constraint(Constraint::EQ, &x, &y);
+    Constraint y_gt_z = Constraint(Constraint::EQ, &y, &z);
+    Constraint x_gt_z = Constraint(Constraint::EQ, &x, &z);
+
+    Connective x_gt_y__AND__y_gt_z = Connective(Connective::AND, &x_gt_y, &y_gt_z);
+    Connective implies = Connective(Connective::IMPLY, &x_gt_y__AND__y_gt_z, &x_gt_z);
+
+    /* CVC4 */
+    Expr implies_cvc4 = parseFormula(&em, &implies);
+
+    /* CHECKING PARSING */
+    std::cout << "\nTest: " << implies_cvc4 << " is: " << smt.query(implies_cvc4) << std::endl;
+
+    clearAllVariables();
+}
+
+/*
+ * (4+3)-(2+1) = 4 
+ */
+void arithmetic__4_plus_3__minus__2_plus_1__equals__4() {
+    ExprManager em;
+    SmtEngine smt(&em);
+
+    /* RAPIDNET */
+    IntVal one = IntVal(1);
+    IntVal two = IntVal(2);
+    IntVal three = IntVal(3);
+    IntVal four = IntVal(4);
+
+    Arithmetic four_plus_three = Arithmetic(Arithmetic::PLUS, &four, &three); 
+    Arithmetic two_plus_one = Arithmetic(Arithmetic::PLUS, &two, &one);
+    Arithmetic four_plus_three__minus__two_plus_one =  Arithmetic(Arithmetic::MINUS, &four_plus_three, &two_plus_one);
+    Constraint equal_sides = Constraint(Constraint::EQ, &four_plus_three__minus__two_plus_one, &four);
+
+    /* CVC4 */
+    Expr equal_sides_cvc4 = parseFormula(&em, &equal_sides);
+
+    /* CHECKING PARSING */
+    std::cout << "\nTest" << equal_sides_cvc4 << " is: " << smt.query(equal_sides_cvc4) << std::endl;
+
+    clearAllVariables();
+}
+
+/* ADAM is the ancestor of everyone 
+ * Ancestor("LilyPotter", "HarryPotter") means LilyPotter is an ancestor of HarryPotter
+ */
+void quantifier__predicate__ancestor() {
+    ExprManager em;
+    SmtEngine smt(&em);
+
+    /* ***************************** rapidnet: make Ancestor(x,y) ****************** */
+
+    vector<Variable::TypeCode> types_rapidnet;
+    types_rapidnet.push_back(Variable::STRING);
+    types_rapidnet.push_back(Variable::STRING);
+    PredicateSchema ancestor_rapidnet =  PredicateSchema("Ancestor", types_rapidnet);
+
+    /* ********************** rapidnet: forall x, Ancestor("Adam",x) ***************** */
+
+    //make bound var
+    StringVal ADAM = StringVal("Adam");
+    Variable str1 = Variable(Variable::STRING, true);
+    vector<Variable*> boundVarList;
+    boundVarList.push_back(&str1);
+
+    // make the formula ancestor("Adam", x)
+    // x is a bound variable
+    vector<Term*> args;
+    args.push_back(&ADAM);
+    args.push_back(&str1);
+
+    PredicateInstance ancestor_adam_x = PredicateInstance(&ancestor_rapidnet, args);
+
+    //make it quantifier
+    Quantifier forall_x__ancestor_ADAM_x = Quantifier(Quantifier::FORALL, boundVarList, &ancestor_adam_x);
+
+    /* ********************** rapidnet: ancestor("Adam","Obama") ********************* */
+
+    StringVal OBAMA = StringVal("Obama");
+    vector<Term*> args_obama_rapidnet;
+    args_obama_rapidnet.push_back(&ADAM);
+    args_obama_rapidnet.push_back(&OBAMA);
+
+    PredicateInstance ancestor_adam_obama = PredicateInstance(&ancestor_rapidnet, args_obama_rapidnet);
+
+    /* ******************************* CVC4 ******************************** */
+
+    Expr ancestor_obama_cvc4 = parseFormula(&em, &ancestor_adam_obama);
+    Expr forall_x__ancestor_ADAM_x_cvc4 = parseFormula(&em, &forall_x__ancestor_ADAM_x);
+
+    /* **************************** CHECK SMT ******************************** */
+
+    smt.assertFormula(forall_x__ancestor_ADAM_x_cvc4);
+    std::cout << "\nSince " << forall_x__ancestor_ADAM_x_cvc4 << " hence "<<  ancestor_obama_cvc4 << " is: " << smt.query(ancestor_obama_cvc4) << std::endl;
+
+    clearAllVariables();
+}
+
+/*
+ * Function symbols testing
+ * 
+ */
+void quantifier__function_child_younger_than_mother() {
+    ExprManager em;
+    SmtEngine smt(&em);
+
+    /* ---------------------------- RAPIDNET ------------------------------ */
+    //mother
+    vector<Variable::TypeCode> domain_types;
+    domain_types.push_back(Variable::STRING);
+    FunctionSchema mother_schema = FunctionSchema("mother", domain_types, Variable::STRING);
+
+    //
+    vector<Term*> args;
+    StringVal MaliaObama = StringVal("MaliaObama");
+    args.push_back(&MaliaObama);
+    UserFunction mother_malia = UserFunction(&mother_schema, args);
+
+    StringVal MichelleObama = StringVal("MichelleObama");
+    StringVal BarbaraBush = StringVal("BarbaraBush");
+
+    Constraint michelle_is_mother_of_malia = Constraint(Constraint::EQ, &mother_malia, &MichelleObama);
+    Constraint barbara_is_mother_of_malia = Constraint(Constraint::EQ, &mother_malia, &BarbaraBush);
+
+    /* ------------------------------ CVC4 ------------------------------ */
+    Expr michelle_is_mother_of_malia_cvc4 = parseFormula(&em, &michelle_is_mother_of_malia);
+    Expr barbara_is_mother_of_malia_cvc4 = parseFormula(&em, &barbara_is_mother_of_malia);
+
+    smt.assertFormula(michelle_is_mother_of_malia_cvc4);
+    std::cout << "\nSince " << michelle_is_mother_of_malia_cvc4 << ", hence " << barbara_is_mother_of_malia_cvc4 << " is: " << smt.query(barbara_is_mother_of_malia_cvc4) << std::endl;
+
+    clearAllVariables();
+}
+
 int main() {
     testIntegersArithmetic();
     testVariables();
     testBoundVariables();
     testBoundPredicate();
     testArithmeticNestedQuantifier();
+    connective__x_gt_y__AND__y_gt_z__IMPLIES__x_gt_z();
+    arithmetic__4_plus_3__minus__2_plus_1__equals__4();
+    quantifier__predicate__ancestor();
+    quantifier__function_child_younger_than_mother(); 
     return 0;
 }
 
