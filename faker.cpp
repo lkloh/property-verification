@@ -49,10 +49,44 @@ void testIntegersArithmetic() {
     clearAllVariables();
 }
 
+/* check that 
+ * (x=y) and (y=4)
+ * IMPLIES (x=4)
+ */
+void testVariables() {
+    ExprManager em;
+    SmtEngine smt(&em);
+
+    /* RAPIDNET */
+    Variable x_rapidnet = Variable(Variable::INT, false);
+    Variable y_rapidnet = Variable(Variable::INT, false);
+    IntVal four_rapidnet = IntVal(4);
+
+    Constraint x_equals_y_rapidnet = Constraint(Constraint::EQ, &x_rapidnet, &y_rapidnet);
+    Constraint y_equals_4_rapidnet = Constraint(Constraint::EQ, &y_rapidnet, &four_rapidnet);
+    Constraint x_equals_4_rapidnet = Constraint(Constraint::EQ, &x_rapidnet, &four_rapidnet);
+
+    /* CVC4 */
+
+    //declare variables
+    Expr x_equals_y_cvc4 = parseFormula(&em, &x_equals_y_rapidnet);
+    Expr y_equals_4_cvc4 = parseFormula(&em, &y_equals_4_rapidnet);
+    Expr x_equals_4_cvc4 = parseFormula(&em, &x_equals_4_rapidnet);
+
+    smt.assertFormula(y_equals_4_cvc4);
+    smt.assertFormula(x_equals_4_cvc4);
+    smt.push();
+
+    /* CHECKING PARSING */
+    std::cout << "\n" << y_equals_4_cvc4 << " and " << x_equals_4_cvc4 << " implies that: " << x_equals_4_cvc4 << " is: " << smt.query(x_equals_4_cvc4) << std::endl;
+
+    clearAllVariables();
+}
 
 
 int main() {
     testIntegersArithmetic();
+    testVariables();
     return 0;
 }
 

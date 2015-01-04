@@ -45,8 +45,6 @@ public:
 };
 
 
-
-
 class Variable: public Term
 {
 public:
@@ -63,7 +61,12 @@ public:
 	 * t: BOOL/INT/DOUBLE/STRING type
 	 * b: free or bound variable?
 	 */
-	Variable(TypeCode t, bool b);
+	Variable(TypeCode t, bool b):varType(t),isbound(b),varCount(0) {
+        Variable::varCount = Variable::varCount + 1;
+		ostringstream countStream;
+		countStream << Variable::varCount;  
+		name =  "variable"+ countStream.str();
+	}
 
 	virtual ~Variable(){}
 
@@ -87,7 +90,7 @@ private:
 	string name;
 	TypeCode varType;
 	bool isbound;
-	static int varCount;
+	int varCount;
 };
 
 
