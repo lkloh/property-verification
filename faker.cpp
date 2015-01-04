@@ -173,11 +173,46 @@ void testBoundPredicate() {
     clearAllVariables();
 }
 
+/*
+ * QUERY (FORALL (x:INT): (EXISTS (y:INT): x+y = 4));
+ */
+void testArithmeticNestedQuantifier() {
+    ExprManager em;
+    SmtEngine smt(&em);
+
+    /* rapidnet */
+    IntVal four = IntVal(4);
+    Variable x = Variable(Variable::INT, true);
+    Variable y = Variable(Variable::INT, true);
+
+    vector<Variable*> boundVarList_exists;
+    boundVarList_exists.push_back(&y);
+
+    vector<Variable*> boundVarList_forall;
+    boundVarList_forall.push_back(&x);
+
+    Arithmetic x_plus_y = Arithmetic(Arithmetic::PLUS, &x, &y);
+    Constraint x_plus_y_eq_4 = Constraint(Constraint::EQ, &x_plus_y, &four);
+    Quantifier exists_y__x_plus_y_eq_4 = Quantifier(Quantifier::EXISTS, boundVarList_exists, &x_plus_y_eq_4);
+
+    Quantifier forall_x__exists_y__x_plus_y_eq_4 = Quantifier(Quantifier::FORALL, boundVarList_forall, &exists_y__x_plus_y_eq_4);
+
+    /* CVC4 */
+    Expr forall_x__exists_y__x_plus_y_eq_4__cvc4 = parseFormula(&em, &forall_x__exists_y__x_plus_y_eq_4);
+
+    /* **************************** CHECK SMT ******************************** */
+
+    std::cout << "\n" << forall_x__exists_y__x_plus_y_eq_4__cvc4 << " is: " << smt.query(forall_x__exists_y__x_plus_y_eq_4__cvc4) << std::endl;
+
+    clearAllVariables();
+}
+
 int main() {
     testIntegersArithmetic();
     testVariables();
     testBoundVariables();
     testBoundPredicate();
+    testArithmeticNestedQuantifier();
     return 0;
 }
 
