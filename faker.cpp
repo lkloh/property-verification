@@ -17,7 +17,6 @@
 
 #include <iostream>
 #include <cvc4/cvc4.h> 
-//#include "smt/smt_engine.h"
 #include "rapidnet_compiler/sdn-formula.h"
 #include "rapidnet_compiler/sdn-formula-to-cvc4.h"
 
@@ -85,6 +84,35 @@ void testVariables() {
 }
 
 /*
+ * FORALL x, (x=3)
+ * Should be INVALID
+ */
+void testBoundVariables() {
+    ExprManager em;
+    SmtEngine smt(&em);
+
+    /* rapidnet */
+
+    IntVal three = IntVal(3);
+    Variable x = Variable(Variable::INT, true);
+
+    vector<Variable*> boundVarList;
+    boundVarList.push_back(&x);
+
+    Constraint x_equals_3 = Constraint(Constraint::EQ, &x, &three);
+
+    Quantifier forall_x__x_equals_3_rapidnet = Quantifier(Quantifier::FORALL, boundVarList, &x_equals_3);
+
+    /* CVC4 */
+    Expr forall_x__x_equals_3_cvc4 = parseFormula(&em, &forall_x__x_equals_3_rapidnet);
+
+    /* check smt */
+    std::cout << "\nTest " << forall_x__x_equals_3_cvc4 << " is: "<< smt.query(forall_x__x_equals_3_cvc4) << std::endl;
+
+    clearAllVariables();
+}
+
+/*
  * CVC4
  * ----
  * isblue: STRING -> BOOLEAN
@@ -146,6 +174,40 @@ void testBoundPredicate() {
 }
 
 /*
+ * QUERY (FORALL (x:INT): (EXISTS (y:INT): x+y = 4));
+ */
+void testArithmeticNestedQuantifier() {
+    ExprManager em;
+    SmtEngine smt(&em);
+
+    /* rapidnet */
+    IntVal four = IntVal(4);
+    Variable x = Variable(Variable::INT, true);
+    Variable y = Variable(Variable::INT, true);
+
+    vector<Variable*> boundVarList_exists;
+    boundVarList_exists.push_back(&y);
+
+    vector<Variable*> boundVarList_forall;
+    boundVarList_forall.push_back(&x);
+
+    Arithmetic x_plus_y = Arithmetic(Arithmetic::PLUS, &x, &y);
+    Constraint x_plus_y_eq_4 = Constraint(Constraint::EQ, &x_plus_y, &four);
+    Quantifier exists_y__x_plus_y_eq_4 = Quantifier(Quantifier::EXISTS, boundVarList_exists, &x_plus_y_eq_4);
+
+    Quantifier forall_x__exists_y__x_plus_y_eq_4 = Quantifier(Quantifier::FORALL, boundVarList_forall, &exists_y__x_plus_y_eq_4);
+
+    /* CVC4 */
+    Expr forall_x__exists_y__x_plus_y_eq_4__cvc4 = parseFormula(&em, &forall_x__exists_y__x_plus_y_eq_4);
+
+    /* **************************** CHECK SMT ******************************** */
+
+    std::cout << "\n" << forall_x__exists_y__x_plus_y_eq_4__cvc4 << " is: " << smt.query(forall_x__exists_y__x_plus_y_eq_4__cvc4) << std::endl;
+
+    clearAllVariables();
+}
+
+/*
  * ((x > y) /\ (y > z)) => (x > z)
  */
 void connective__x_gt_y__AND__y_gt_z__IMPLIES__x_gt_z() {
@@ -169,35 +231,6 @@ void connective__x_gt_y__AND__y_gt_z__IMPLIES__x_gt_z() {
 
     /* CHECKING PARSING */
     std::cout << "\nTest: " << implies_cvc4 << " is: " << smt.query(implies_cvc4) << std::endl;
-
-    clearAllVariables();
-}
-
-/*
- * FORALL x, (x=3)
- * Should be INVALID
- */
-void testBoundVariables() {
-    ExprManager em;
-    SmtEngine smt(&em);
-
-    /* rapidnet */
-
-    IntVal three = IntVal(3);
-    Variable x = Variable(Variable::INT, true);
-
-    vector<Variable*> boundVarList;
-    boundVarList.push_back(&x);
-
-    Constraint x_equals_3 = Constraint(Constraint::EQ, &x, &three);
-
-    Quantifier forall_x__x_equals_3_rapidnet = Quantifier(Quantifier::FORALL, boundVarList, &x_equals_3);
-
-    /* CVC4 */
-    Expr forall_x__x_equals_3_cvc4 = parseFormula(&em, &forall_x__x_equals_3_rapidnet);
-
-    /* check smt */
-    std::cout << "\nTest " << forall_x__x_equals_3_cvc4 << " is: "<< smt.query(forall_x__x_equals_3_cvc4) << std::endl;
 
     clearAllVariables();
 }
@@ -280,40 +313,6 @@ void quantifier__predicate__ancestor() {
 
     smt.assertFormula(forall_x__ancestor_ADAM_x_cvc4);
     std::cout << "\nSince " << forall_x__ancestor_ADAM_x_cvc4 << " hence "<<  ancestor_obama_cvc4 << " is: " << smt.query(ancestor_obama_cvc4) << std::endl;
-
-    clearAllVariables();
-}
-
-/*
- * QUERY (FORALL (x:INT): (EXISTS (y:INT): x+y = 4));
- */
-void testArithmeticNestedQuantifier() {
-    ExprManager em;
-    SmtEngine smt(&em);
-
-    /* rapidnet */
-    IntVal four = IntVal(4);
-    Variable x = Variable(Variable::INT, true);
-    Variable y = Variable(Variable::INT, true);
-
-    vector<Variable*> boundVarList_exists;
-    boundVarList_exists.push_back(&y);
-
-    vector<Variable*> boundVarList_forall;
-    boundVarList_forall.push_back(&x);
-
-    Arithmetic x_plus_y = Arithmetic(Arithmetic::PLUS, &x, &y);
-    Constraint x_plus_y_eq_4 = Constraint(Constraint::EQ, &x_plus_y, &four);
-    Quantifier exists_y__x_plus_y_eq_4 = Quantifier(Quantifier::EXISTS, boundVarList_exists, &x_plus_y_eq_4);
-
-    Quantifier forall_x__exists_y__x_plus_y_eq_4 = Quantifier(Quantifier::FORALL, boundVarList_forall, &exists_y__x_plus_y_eq_4);
-
-    /* CVC4 */
-    Expr forall_x__exists_y__x_plus_y_eq_4__cvc4 = parseFormula(&em, &forall_x__exists_y__x_plus_y_eq_4);
-
-    /* **************************** CHECK SMT ******************************** */
-
-    std::cout << "\n" << forall_x__exists_y__x_plus_y_eq_4__cvc4 << " is: " << smt.query(forall_x__exists_y__x_plus_y_eq_4__cvc4) << std::endl;
 
     clearAllVariables();
 }
@@ -440,7 +439,7 @@ int main() {
     arithmetic__4_plus_3__minus__2_plus_1__equals__4();
     quantifier__predicate__ancestor();
     quantifier__function_child_younger_than_mother();
-    nested_function_check();
+    nested_function_check(); 
     return 0;
 }
 
