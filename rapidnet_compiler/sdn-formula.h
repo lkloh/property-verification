@@ -116,7 +116,7 @@ public:
 	}
 
 	void PrintSchema() {
-
+		cout << name;	
 	}
 
 private:
@@ -144,7 +144,16 @@ public:
 	}
 
 	void PrintTerm() {
-
+		schema->PrintSchema();
+		cout << "(";
+		vector<Term*>::iterator it;
+		for (it = args.begin(); it != args.end(); it++) {
+		    if (it != args.begin()) {
+		      	cout << ",";
+		    }
+		    (*it)->PrintTerm();
+		}
+		cout << ")";
 	}
 
 private:
@@ -474,11 +483,26 @@ public:
 	}
 
 	void PrintConstraint() {
-
+		leftE->PrintTerm();
+		PrintOp();
+		rightE->PrintTerm();
 	}
 
 	void PrintOp() {
-
+		switch(op){
+		case Constraint::EQ:
+		    cout << "=";
+		    break;
+		case Constraint::NEQ:
+		    cout << "!=";
+		    break;
+		case Constraint::GT:
+		    cout << ">";
+		    break;
+		case Constraint::LT:
+		    cout << "<";
+		    break;
+		}
 	}
 
 private:
