@@ -79,7 +79,9 @@ public:
 		return isbound;
 	}
 
-	void PrintTerm();
+	void PrintTerm() {
+		cout << name;
+	}
 
 private:
 	string name;
@@ -110,7 +112,9 @@ public:
 		return range;
 	}
 
-	void PrintSchema();
+	void PrintSchema() {
+
+	}
 
 private:
 	string name;
@@ -136,7 +140,9 @@ public:
 		return args;
 	}
 
-	void PrintTerm();
+	void PrintTerm() {
+
+	}
 
 private:
 	FunctionSchema* schema;
@@ -154,7 +160,7 @@ class Value: public Term
 public:
 	virtual ~Value(){}
 
-        virtual void PrintTerm(){}
+    virtual void PrintTerm(){}
 };
 
 class IntVal: public Value
@@ -168,7 +174,9 @@ public:
 		return value;
 	}
 
-	void PrintTerm();
+	void PrintTerm() {
+		cout << value;
+	}
 
 private:
 	int value;
@@ -185,7 +193,9 @@ public:
 		return value;
 	}
 
-	void PrintTerm();	
+	void PrintTerm() {
+		cout << value;
+	}	
 
 private:
 	double value;
@@ -202,7 +212,9 @@ public:
 		return value;
 	}
 
-	void PrintTerm();	
+	void PrintTerm() {
+		cout << value;
+	}	
 
 private:
 	string value;
@@ -219,7 +231,9 @@ public:
 		return value;
 	}
 
-	void PrintTerm();
+	void PrintTerm() {
+		cout << value;
+	}
 
 private:
 	bool value;
@@ -251,9 +265,13 @@ public:
 		return rightE;
 	}
 
-	void PrintTerm();
+	void PrintTerm() {
 
-	void PrintOp();
+	}
+
+	void PrintOp() {
+
+	}
 
 private:
 	ArithOp op;
@@ -438,7 +456,7 @@ public:
 	Constraint(Operator opt, Term* exprL, Term* exprR):
 		op(opt),leftE(exprL),rightE(exprR){}
 
-	~Constraint();
+	~Constraint() {}
 
 	Operator GetOperator() {
 		return op;
@@ -452,9 +470,13 @@ public:
 		return rightE;
 	}
 
-	void PrintConstraint();
+	void PrintConstraint() {
 
-	void PrintOp();
+	}
+
+	void PrintOp() {
+
+	}
 
 private:
 	Operator op;
