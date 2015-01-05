@@ -32,12 +32,12 @@ void testIntegersArithmetic() {
     SmtEngine smt(&em);
 
     /* RAPIDNET */
-    IntVal three = IntVal(3);
-    IntVal four = IntVal(4);
-    IntVal seven = IntVal(7);
+    IntVal* three = new IntVal(3);
+    IntVal* four = new IntVal(4);
+    IntVal* seven = new IntVal(7);
 
-    Arithmetic three_plus_four_rapidnet = Arithmetic(Arithmetic::PLUS, &three, &four); 
-    Constraint three_plus_four_equals_seven_rapidnet = Constraint(Constraint::EQ, &three_plus_four_rapidnet, &seven);
+    Arithmetic three_plus_four_rapidnet = Arithmetic(Arithmetic::PLUS, three, four); 
+    Constraint three_plus_four_equals_seven_rapidnet = Constraint(Constraint::EQ, &three_plus_four_rapidnet, seven);
 
     /* CVC4*/
     Expr three_plus_four_cvc4 = parseTerm(&em, &three_plus_four_rapidnet);
@@ -431,6 +431,7 @@ void nested_function_check() {
 
 int main() {
     testIntegersArithmetic();
+    std::cout << "PigS" << std::endl;
     testVariables();
     testBoundVariables();
     testBoundPredicate();
