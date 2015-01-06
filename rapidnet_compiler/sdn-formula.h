@@ -149,22 +149,29 @@ public:
         virtual void PrintTerm(){}
 };
 
+
+
+
+
 class IntVal: public Value
 {
 public:
-	IntVal(int v):value(v){}
+	IntVal(int v);
 
-	virtual ~IntVal(){}
+	virtual ~IntVal();
 
-	int GetIntValue() {
-		return value;
-	}
+	int GetIntValue();
 
 	void PrintTerm();
 
 private:
 	int value;
 };
+
+
+
+
+
 
 class DoubleVal: public Value
 {

@@ -159,9 +159,15 @@ UserFunction::PrintTerm()
 
 /* ********************************** IntVal ********************************** */
 
-void
-IntVal::PrintTerm()
-{
+IntVal::IntVal(int v):value(v){}
+
+IntVal::~IntVal(){}
+
+int IntVal::GetIntValue() {
+  return value;
+}
+
+void IntVal::PrintTerm() {
   cout << value;
 }
 
