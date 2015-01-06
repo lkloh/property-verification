@@ -131,9 +131,21 @@ void FunctionSchema::PrintSchema() {
 
 /* **************************** USER FUNCTION ********************************* */
 
-void
-UserFunction::PrintTerm()
-{
+
+UserFunction::UserFunction(FunctionSchema* s, vector<Term*>& a):
+    schema(s),args(a){}
+
+UserFunction::~UserFunction(){}
+
+FunctionSchema* UserFunction::GetSchema() {
+  return schema;
+}
+
+vector<Term*>& UserFunction::GetArgs() {
+  return args;
+}
+
+void UserFunction::PrintTerm() {
   schema->PrintSchema();
   cout << "(";
   vector<Term*>::iterator it;
@@ -228,7 +240,6 @@ bool BoolVal::GetBoolValue() {
   return value;
 }
 
-
 void BoolVal::PrintTerm() {
   cout << value;
 }
@@ -242,17 +253,28 @@ void BoolVal::PrintTerm() {
 
 /* *************************** Arithmetic *********************************** */
 
-void
-Arithmetic::PrintTerm()
-{
+Arithmetic::Arithmetic(ArithOp opt, Term* exprL, Term* exprR):
+    op(opt), leftE(exprL), rightE(exprR){}
+
+Arithmetic::ArithOp Arithmetic::GetArithOp() {
+  return op;
+}
+
+Term* Arithmetic::GetLeftE() {
+  return leftE;
+}
+
+Term* Arithmetic::GetRightE() {
+  return rightE;
+}
+
+void Arithmetic::PrintTerm() {
   leftE->PrintTerm();
   PrintOp();
   rightE->PrintTerm();
 }
 
-void
-Arithmetic::PrintOp()
-{
+void Arithmetic::PrintOp() {
   switch(op){
   case Arithmetic::PLUS:
     cout << "+";

@@ -73,9 +73,6 @@ public:
 	
 	string GetVariableName();
 
-	// bool GetFreeOrBound() {
-	// 	return isbound;
-	// }
 	bool GetFreeOrBound();
 
 	void PrintTerm();
@@ -115,18 +112,13 @@ private:
 class UserFunction: public Term
 {
 public:
-	UserFunction(FunctionSchema* s, vector<Term*> a):
-		schema(s),args(a){}
+	UserFunction(FunctionSchema* s, vector<Term*>& a);
 
-	virtual ~UserFunction(){}
+	virtual ~UserFunction();
 
-	FunctionSchema* GetSchema() {
-		return schema;
-	}
+	FunctionSchema* GetSchema();
 
-	vector<Term*>& GetArgs() {
-		return args;
-	}
+	vector<Term*>& GetArgs();
 
 	void PrintTerm();
 
@@ -206,6 +198,9 @@ private:
 	string value;
 };
 
+
+
+
 class BoolVal: public Value
 {
 public:
@@ -221,6 +216,10 @@ private:
 	bool value;
 };
 
+
+
+
+
 class Arithmetic: public Term
 {
 public:
@@ -232,20 +231,13 @@ public:
 		DIVIDE
 	};
 
-	Arithmetic(ArithOp opt, Term* exprL, Term* exprR):
-		op(opt), leftE(exprL), rightE(exprR){}
+	Arithmetic(ArithOp opt, Term* exprL, Term* exprR);
 
-	ArithOp GetArithOp() {
-		return op;
-	}
+	ArithOp GetArithOp();
 
-	Term* GetLeftE() {
-		return leftE;
-	}
+	Term* GetLeftE();
 
-	Term* GetRightE() {
-		return rightE;
-	}
+	Term* GetRightE();
 
 	void PrintTerm();
 
@@ -287,7 +279,6 @@ public:
 	Formula(){}
 
 	virtual ~Formula(){}
-
 };
 
 
