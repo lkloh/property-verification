@@ -271,6 +271,61 @@ void arithmetic__4_plus_3__minus__2_plus_1__equals__4() {
 
 
 
+/* ADAM is the ancestor of everyone 
+ * Ancestor("LilyPotter", "HarryPotter") means LilyPotter is an ancestor of HarryPotter
+ */
+void quantifier__predicate__ancestor() {
+    ExprManager em;
+    SmtEngine smt(&em);
+
+    /* ***************************** rapidnet: make Ancestor(x,y) ****************** */
+
+    vector<Variable::TypeCode> types_rapidnet;
+    types_rapidnet.push_back(Variable::STRING);
+    types_rapidnet.push_back(Variable::STRING);
+    PredicateSchema* ancestor_rapidnet = new PredicateSchema("Ancestor", types_rapidnet);
+
+    /* ********************** rapidnet: forall x, Ancestor("Adam",x) ***************** */
+
+    //make bound var
+    StringVal* ADAM = new StringVal("Adam");
+    Variable* str1 = new Variable(Variable::STRING, true);
+    vector<Variable*> boundVarList;
+    boundVarList.push_back(str1);
+
+    // make the formula ancestor("Adam", x)
+    // x is a bound variable
+    vector<Term*> args;
+    args.push_back(ADAM);
+    args.push_back(str1);
+
+    PredicateInstance* ancestor_adam_x = new PredicateInstance(ancestor_rapidnet, args);
+
+    //make it quantifier
+    Quantifier* forall_x__ancestor_ADAM_x = new Quantifier(Quantifier::FORALL, boundVarList, ancestor_adam_x);
+
+    /* ********************** rapidnet: ancestor("Adam","Obama") ********************* */
+
+    StringVal* OBAMA = new StringVal("Obama");
+    vector<Term*> args_obama_rapidnet;
+    args_obama_rapidnet.push_back(ADAM);
+    args_obama_rapidnet.push_back(OBAMA);
+
+    PredicateInstance* ancestor_adam_obama = new PredicateInstance(ancestor_rapidnet, args_obama_rapidnet);
+
+    /* ******************************* CVC4 ******************************** */
+
+    Expr ancestor_obama_cvc4 = parseFormula(&em, ancestor_adam_obama);
+    Expr forall_x__ancestor_ADAM_x_cvc4 = parseFormula(&em, forall_x__ancestor_ADAM_x);
+
+    /* **************************** CHECK SMT ******************************** */
+
+    smt.assertFormula(forall_x__ancestor_ADAM_x_cvc4);
+    std::cout << "\nSince " << forall_x__ancestor_ADAM_x_cvc4 << " hence "<<  ancestor_obama_cvc4 << " is: " << smt.query(ancestor_obama_cvc4) << std::endl;
+
+    clearAllVariables();
+}
+
 int main() {
     testIntegersArithmetic();
     testVariables();
@@ -279,6 +334,7 @@ int main() {
     testArithmeticNestedQuantifier();
     connective__x_gt_y__AND__y_gt_z__IMPLIES__x_gt_z();
     arithmetic__4_plus_3__minus__2_plus_1__equals__4();
+    quantifier__predicate__ancestor();
     return 0;
 }
 
