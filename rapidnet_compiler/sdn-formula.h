@@ -434,23 +434,15 @@ public:
 		LT,		//Smaller than
 	};
 
-	// Constraint(Operator opt, Term* exprL, Term* exprR):
-	// 	op(opt),leftE(exprL),rightE(exprR){}
 	Constraint(Operator opt, Term* exprL, Term* exprR);
 
 	~Constraint();
 
-	Operator GetOperator() {
-		return op;
-	}
+	Operator GetOperator();
 
-	Term* GetLeftE() {
-		return leftE;
-	}
+	Term* GetLeftE();
 
-	Term* GetRightE() {
-		return rightE;
-	}
+	Term* GetRightE();
 
 	void PrintConstraint();
 

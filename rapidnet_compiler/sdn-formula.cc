@@ -18,6 +18,18 @@ Constraint::~Constraint()
 	delete rightE;
 }
 
+Constraint::Operator Constraint::GetOperator() {
+  return op;
+}
+
+Term* Constraint::GetLeftE() {
+  return leftE;
+}
+
+Term* Constraint::GetRightE() {
+  return rightE;
+}
+
 void
 Constraint::PrintConstraint()
 {
