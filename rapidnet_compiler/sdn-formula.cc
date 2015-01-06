@@ -77,7 +77,7 @@ Formula* Quantifier::GetQuantifierFormula() {
 
 /* ************************* PredicateSchema ******************************** */
 
-PredicateSchema::PredicateSchema(string n, vector<Variable::TypeCode> t):
+PredicateSchema::PredicateSchema(string n, vector<Variable::TypeCode>& t):
   name(n),types(t){}
 
 PredicateSchema::~PredicateSchema(){}
@@ -101,7 +101,7 @@ vector<Variable::TypeCode>& PredicateSchema::GetTypes () {
 
 /* ************************* PredicateInstance ******************************** */
 
-PredicateInstance::PredicateInstance(PredicateSchema* s, vector<Term*> a):
+PredicateInstance::PredicateInstance(PredicateSchema* s, vector<Term*>& a):
   schema(s),args(a){}
 
 PredicateInstance::~PredicateInstance(){}

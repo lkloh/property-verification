@@ -343,7 +343,7 @@ private:
 class PredicateSchema
 {
 public:
-	PredicateSchema(string n, vector<Variable::TypeCode> t);
+	PredicateSchema(string n, vector<Variable::TypeCode>& t);
 
 	virtual ~PredicateSchema();
 
@@ -362,7 +362,7 @@ private:
 class PredicateInstance: public Formula
 {
 public:
-	PredicateInstance(PredicateSchema* s, vector<Term*> a);
+	PredicateInstance(PredicateSchema* s, vector<Term*>& a);
 
 	virtual ~PredicateInstance();
 
