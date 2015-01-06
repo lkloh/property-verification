@@ -176,13 +176,11 @@ private:
 class DoubleVal: public Value
 {
 public:
-	DoubleVal(double v):value(v){}
+	DoubleVal(double v);
 
-	~DoubleVal(){}
+	virtual ~DoubleVal();
 
-	double GetDoubleValue() {
-		return value;
-	}
+	double GetDoubleValue();
 
 	void PrintTerm();	
 
@@ -190,16 +188,17 @@ private:
 	double value;
 };
 
+
+
+
 class StringVal: public Value
 {
 public:
-	StringVal(string v):value(v){}
+	StringVal(string v);
 
-	~StringVal(){}
+	virtual ~StringVal();
 
-	string GetStringValue() {
-		return value;
-	}
+	string GetStringValue();
 
 	void PrintTerm();	
 
@@ -210,13 +209,11 @@ private:
 class BoolVal: public Value
 {
 public:
-	BoolVal(double v):value(v){}
+	BoolVal(double v);
 
-	~BoolVal(){}
+	~BoolVal();
 
-	bool GetBoolValue() {
-		return value;
-	}
+	bool GetBoolValue();
 
 	void PrintTerm();
 

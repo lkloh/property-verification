@@ -30,17 +30,14 @@ Term* Constraint::GetRightE() {
   return rightE;
 }
 
-void
-Constraint::PrintConstraint()
+void Constraint::PrintConstraint()
 {
   leftE->PrintTerm();
   PrintOp();
   rightE->PrintTerm();
 }
 
-void 
-Constraint::PrintOp()
-{
+void Constraint::PrintOp() {
   switch(op){
   case Constraint::EQ:
     cout << "=";
@@ -176,11 +173,19 @@ void IntVal::PrintTerm() {
 
 
 
+
+
 /* ****************************** DoubleVal ********************************** */
 
-void
-DoubleVal::PrintTerm()
-{
+DoubleVal::DoubleVal(double v):value(v){}
+
+DoubleVal::~DoubleVal(){}
+
+double DoubleVal::GetDoubleValue() {
+  return value;
+}
+
+void DoubleVal::PrintTerm() {
   cout << value;
 }
 
@@ -192,9 +197,16 @@ DoubleVal::PrintTerm()
 
 /* ****************************** StringVal ********************************* */
 
-void
-StringVal::PrintTerm()
-{
+
+StringVal::StringVal(string v):value(v){}
+
+StringVal::~StringVal(){}
+
+string StringVal::GetStringValue() {
+  return value;
+}
+
+void StringVal::PrintTerm() {
   cout << value;
 }
 
@@ -208,9 +220,16 @@ StringVal::PrintTerm()
 
 /* ****************************** BoolVal *********************************** */
 
-void
-BoolVal::PrintTerm()
-{
+BoolVal::BoolVal(double v):value(v){}
+
+BoolVal::~BoolVal(){}
+
+bool BoolVal::GetBoolValue() {
+  return value;
+}
+
+
+void BoolVal::PrintTerm() {
   cout << value;
 }
 
