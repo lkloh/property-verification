@@ -210,12 +210,43 @@ void testArithmeticNestedQuantifier() {
 }
 
 
+
+/*
+ * ((x > y) /\ (y > z)) => (x > z)
+ */
+void connective__x_gt_y__AND__y_gt_z__IMPLIES__x_gt_z() {
+    ExprManager em;
+    SmtEngine smt(&em);
+
+    /* RAPIDNET */
+    Variable* x = new Variable(Variable::INT, false);
+    Variable* y = new Variable(Variable::INT, false);
+    Variable* z = new Variable(Variable::INT, false);
+
+    Constraint* x_gt_y = new Constraint(Constraint::EQ, x, y);
+    Constraint* y_gt_z = new Constraint(Constraint::EQ, y, z);
+    Constraint* x_gt_z = new Constraint(Constraint::EQ, x, z);
+
+    Connective* x_gt_y__AND__y_gt_z = new Connective(Connective::AND, x_gt_y, y_gt_z);
+    Connective* implies = new Connective(Connective::IMPLY, x_gt_y__AND__y_gt_z, x_gt_z);
+
+    /* CVC4 */
+    Expr implies_cvc4 = parseFormula(&em, implies);
+
+    /* CHECKING PARSING */
+    std::cout << "\nTest: " << implies_cvc4 << " is: " << smt.query(implies_cvc4) << std::endl;
+
+    clearAllVariables();
+}
+
+
 int main() {
     testIntegersArithmetic();
     testVariables();
     testBoundVariables();
     testBoundPredicate();
     testArithmeticNestedQuantifier();
+    connective__x_gt_y__AND__y_gt_z__IMPLIES__x_gt_z();
     return 0;
 }
 

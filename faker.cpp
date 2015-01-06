@@ -32,33 +32,7 @@ using namespace CVC4;
 
 
 
-/*
- * ((x > y) /\ (y > z)) => (x > z)
- */
-void connective__x_gt_y__AND__y_gt_z__IMPLIES__x_gt_z() {
-    ExprManager em;
-    SmtEngine smt(&em);
 
-    /* RAPIDNET */
-    Variable x = Variable(Variable::INT, false);
-    Variable y = Variable(Variable::INT, false);
-    Variable z = Variable(Variable::INT, false);
-
-    Constraint x_gt_y = Constraint(Constraint::EQ, &x, &y);
-    Constraint y_gt_z = Constraint(Constraint::EQ, &y, &z);
-    Constraint x_gt_z = Constraint(Constraint::EQ, &x, &z);
-
-    Connective x_gt_y__AND__y_gt_z = Connective(Connective::AND, &x_gt_y, &y_gt_z);
-    Connective implies = Connective(Connective::IMPLY, &x_gt_y__AND__y_gt_z, &x_gt_z);
-
-    /* CVC4 */
-    Expr implies_cvc4 = parseFormula(&em, &implies);
-
-    /* CHECKING PARSING */
-    std::cout << "\nTest: " << implies_cvc4 << " is: " << smt.query(implies_cvc4) << std::endl;
-
-    clearAllVariables();
-}
 
 /*
  * (4+3)-(2+1) = 4 
