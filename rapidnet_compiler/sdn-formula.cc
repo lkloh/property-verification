@@ -23,6 +23,27 @@ void Term::PrintTerm(){}
 
 
 
+/* ***************************** FORMULA *********************************** */
+
+Connective::Connective(ConnType ct, Formula* formL, Formula* formR):
+    conntype(ct), leftF(formL), rightF(formR){}
+
+Connective::~Connective(){}
+
+Connective::ConnType Connective::GetConnType() {
+  return conntype;
+}
+
+Formula* Connective::GetLeftF() {
+  return leftF;
+}
+
+Formula* Connective::GetRightF() {
+  return rightF;
+}
+
+/* ***************************** FORMULA *********************************** */
+
 /* *************************** CONSTRAINT ************************************** */
 
 Constraint::Constraint(Operator opt, Term* exprL, Term* exprR):

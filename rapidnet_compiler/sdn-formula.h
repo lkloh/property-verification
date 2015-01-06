@@ -67,7 +67,6 @@ public:
 	virtual ~Variable(){}
 
 	TypeCode GetVariableType();
-
 	
 	string GetVariableName();
 
@@ -292,22 +291,15 @@ public:
 		AND
 	};
 
-	Connective(ConnType ct, Formula* formL, Formula* formR):
-		conntype(ct), leftF(formL), rightF(formR){}
+	Connective(ConnType ct, Formula* formL, Formula* formR);
 
-	virtual ~Connective(){}
+	virtual ~Connective();
 
-	virtual ConnType GetConnType() {
-		return conntype;
-	}
+	virtual ConnType GetConnType();
 
-	virtual Formula* GetLeftF() {
-		return leftF;
-	}
+	virtual Formula* GetLeftF();
 
-	virtual Formula* GetRightF() {
-		return rightF;
-	}
+	virtual Formula* GetRightF();
 
 private:
 	ConnType conntype;
