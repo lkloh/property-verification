@@ -7,6 +7,8 @@
 
 #include "sdn-formula.h"
 
+/* *************************** CONSTRAINT ************************************** */
+
 Constraint::~Constraint()
 {
 	delete leftE;
@@ -40,28 +42,59 @@ Constraint::PrintOp()
   }
 }
 
+/* *************************** CONSTRAINT ************************************** */
+
+
+
+
+
+/* **************************** VARIABLE ************************************** */
+
 int Variable::varCount = 0;
 
-Variable::Variable(TypeCode t, bool b):
-  varType(t),isbound(b)
-{
-        Variable::varCount = Variable::varCount + 1;
+Variable::Variable(TypeCode t, bool b):varType(t),isbound(b) {
+  Variable::varCount = Variable::varCount + 1;
 	ostringstream countStream;
 	countStream << Variable::varCount;  
 	name =  "variable"+ countStream.str();
 }
 
-void
-Variable::PrintTerm()
-{
+Variable::TypeCode Variable::GetVariableType() {
+  return varType;
+}
+
+void Variable::PrintTerm() {
   cout << name;
 }
 
-void
+/* **************************** VARIABLE ************************************** */
+
+
+
+
+
+
+
+
+/* ************************* FUNCTION SCHEMA ********************************** */
+
+void 
 FunctionSchema::PrintSchema()
 {
   cout << name;
 }
+
+/* ************************* FUNCTION SCHEMA ********************************** */
+
+
+
+
+
+
+
+
+
+/* **************************** USER FUNCTION ********************************* */
 
 void
 UserFunction::PrintTerm()
@@ -80,11 +113,26 @@ UserFunction::PrintTerm()
   cout << ")";
 }
 
+/* **************************** USER FUNCTION ********************************* */
+
+
+
+
+
+/* ********************************** IntVal ********************************** */
+
 void
 IntVal::PrintTerm()
 {
   cout << value;
 }
+
+/* ********************************** IntVal ********************************** */
+
+
+
+
+/* ****************************** DoubleVal ********************************** */
 
 void
 DoubleVal::PrintTerm()
@@ -92,17 +140,44 @@ DoubleVal::PrintTerm()
   cout << value;
 }
 
+/* ****************************** DoubleVal ********************************** */
+
+
+
+
+
+/* ****************************** StringVal ********************************* */
+
 void
 StringVal::PrintTerm()
 {
   cout << value;
 }
 
+/* ****************************** StringVal ********************************* */
+
+
+
+
+
+
+
+/* ****************************** BoolVal *********************************** */
+
 void
 BoolVal::PrintTerm()
 {
   cout << value;
 }
+
+/* ****************************** BoolVal *********************************** */
+
+
+
+
+
+
+/* *************************** Arithmetic *********************************** */
 
 void
 Arithmetic::PrintTerm()
@@ -130,3 +205,18 @@ Arithmetic::PrintOp()
     break;
   }  
 }
+
+/* *************************** Arithmetic *********************************** */
+
+
+
+
+
+
+
+
+
+
+
+
+

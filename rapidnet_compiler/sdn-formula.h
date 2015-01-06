@@ -67,9 +67,10 @@ public:
 
 	virtual ~Variable(){}
 
-	TypeCode GetVariableType() {
-		return varType;
-	}
+	// TypeCode GetVariableType() {
+	// 	return varType;
+	// }
+	TypeCode GetVariableType();
 
 	string GetVariableName() {
 		return name;
