@@ -38,11 +38,9 @@ class Term
 public:
 	virtual ~Term(){}
 
-	virtual int GetValue() { //dummy return
-		return 0;
-	}
+	virtual int GetValue();
 	
-	virtual void PrintTerm(){}
+	virtual void PrintTerm();
 };
 
 
@@ -138,7 +136,7 @@ class Value: public Term
 public:
 	virtual ~Value(){}
 
-        virtual void PrintTerm(){}
+    virtual void PrintTerm(){}
 };
 
 

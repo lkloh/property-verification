@@ -7,6 +7,22 @@
 
 #include "sdn-formula.h"
 
+
+/* ***************************** TERM ************************************** */
+
+int Term::GetValue() { //dummy return
+  return 0;
+}
+
+void Term::PrintTerm(){}
+
+/* ***************************** TERM ************************************** */
+
+
+
+
+
+
 /* *************************** CONSTRAINT ************************************** */
 
 Constraint::Constraint(Operator opt, Term* exprL, Term* exprR):
