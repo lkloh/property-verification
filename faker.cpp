@@ -23,31 +23,6 @@
 using namespace std;
 using namespace CVC4;
 
-/* 
- * check that 
- * 3+4 = 7 is VALID 
- */
-void testIntegersArithmetic() {
-    ExprManager em;
-    SmtEngine smt(&em);
-
-    /* RAPIDNET */
-    IntVal* three = new IntVal(3);
-    IntVal* four = new IntVal(4);
-    IntVal* seven = new IntVal(7);
-
-    Arithmetic three_plus_four_rapidnet = Arithmetic(Arithmetic::PLUS, three, four); 
-    Constraint three_plus_four_equals_seven_rapidnet = Constraint(Constraint::EQ, &three_plus_four_rapidnet, seven);
-
-    /* CVC4*/
-    Expr three_plus_four_cvc4 = parseTerm(&em, &three_plus_four_rapidnet);
-    Expr three_plus_four_equals_seven_cvc4 = parseFormula(&em, &three_plus_four_equals_seven_rapidnet); 
-
-    /* CHECKING PARSING */
-    std::cout << "\n" << three_plus_four_equals_seven_cvc4 << " is: " << smt.query(three_plus_four_equals_seven_cvc4) << std::endl;
-
-    clearAllVariables();
-}
 
 /* check that 
  * (x=y) and (y=4)
@@ -430,8 +405,6 @@ void nested_function_check() {
 }
 
 int main() {
-    testIntegersArithmetic();
-    std::cout << "PigS" << std::endl;
     testVariables();
     testBoundVariables();
     testBoundPredicate();
