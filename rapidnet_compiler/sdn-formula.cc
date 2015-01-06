@@ -44,6 +44,35 @@ Formula* Connective::GetRightF() {
 
 /* ***************************** FORMULA *********************************** */
 
+
+
+
+/* ***************************** Quantifier *********************************** */
+
+
+Quantifier::Quantifier(QuanType q, vector<Variable*>& b, Formula* f):
+  quantype(q),boundVarList(b),fml(f){}
+
+Quantifier::~Quantifier(){}
+
+
+vector<Variable*>& Quantifier::GetBoundVariables() {
+  return boundVarList;
+}
+
+Quantifier::QuanType Quantifier::GetQuantifierType() {
+  return quantype;
+}
+
+Formula* Quantifier::GetQuantifierFormula() {
+  return fml;
+}
+
+/* ***************************** Quantifier *********************************** */
+
+
+
+
 /* *************************** CONSTRAINT ************************************** */
 
 Constraint::Constraint(Operator opt, Term* exprL, Term* exprR):

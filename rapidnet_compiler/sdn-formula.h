@@ -321,24 +321,15 @@ public:
 		EXISTS
 	};
 
-	Quantifier(QuanType q, vector<Variable*> b, Formula* f):
-		quantype(q),boundVarList(b),fml(f){}
+	Quantifier(QuanType q, vector<Variable*>& b, Formula* f);
 
-	virtual ~Quantifier(){}
+	virtual ~Quantifier();
 
+	virtual vector<Variable*>& GetBoundVariables();
 
-	virtual vector<Variable*>& GetBoundVariables() {
-		return boundVarList;
-	}
+	virtual QuanType GetQuantifierType();
 
-	virtual QuanType GetQuantifierType() {
-		return quantype;
-	}
-
-
-	virtual Formula* GetQuantifierFormula() {
-		return fml;
-	}
+	virtual Formula* GetQuantifierFormula();
 
 private:
 	QuanType quantype;
