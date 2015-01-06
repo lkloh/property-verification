@@ -83,12 +83,41 @@ void testVariables() {
     clearAllVariables();
 }
 
+/*
+ * FORALL x, (x=3)
+ * Should be INVALID
+ */
+void testBoundVariables() {
+    ExprManager em;
+    SmtEngine smt(&em);
+
+    /* rapidnet */
+
+    IntVal* three = new IntVal(3);
+    Variable* x = new Variable(Variable::INT, true);
+
+    vector<Variable*> boundVarList;
+    boundVarList.push_back(x);
+
+    Constraint* x_equals_3 = new Constraint(Constraint::EQ, x, three);
+
+    Quantifier* forall_x__x_equals_3_rapidnet = new Quantifier(Quantifier::FORALL, boundVarList, x_equals_3);
+
+    /* CVC4 */
+    Expr forall_x__x_equals_3_cvc4 = parseFormula(&em, forall_x__x_equals_3_rapidnet);
+
+    /* check smt */
+    std::cout << "\nTest " << forall_x__x_equals_3_cvc4 << " is: "<< smt.query(forall_x__x_equals_3_cvc4) << std::endl;
+
+    clearAllVariables();
+}
 
 
 
 int main() {
     testIntegersArithmetic();
     testVariables();
+    testBoundVariables();
     return 0;
 }
 
