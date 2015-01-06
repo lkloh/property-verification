@@ -113,11 +113,72 @@ void testBoundVariables() {
 }
 
 
+/*
+ * CVC4
+ * ----
+ * isblue: STRING -> BOOLEAN
+ * ASSERT isblue("sky")
+ * QUERY EXISTS x, isblue(x) 
+ */
+void testBoundPredicate() {
+    ExprManager em;
+    SmtEngine smt(&em);
+
+    /* ***************************** rapidnet: make isblue function ****************** */
+
+    vector<Variable::TypeCode> types_rapidnet;
+    types_rapidnet.push_back(Variable::STRING);
+    PredicateSchema* isblue_rapidnet = new PredicateSchema("isblue", types_rapidnet);
+
+    /* ************************ rapidnet: exists x, isblue(x) ************************ */
+
+    //make bound var
+    Variable* x = new Variable(Variable::STRING, true);
+    vector<Variable*> boundVarList;
+    boundVarList.push_back(x);
+
+    // make the formula isblue(x)
+    // x is a bound variable
+    vector<Term*> args;
+    args.push_back(x);
+
+    PredicateInstance* isblue_x_rapidnet = new PredicateInstance(isblue_rapidnet, args);
+
+    //make it quantifier
+    Quantifier* exists_x__isblue_x_rapidnet = new Quantifier(Quantifier::EXISTS, boundVarList, isblue_x_rapidnet);
+
+    /* ************************ rapidnet: isblue("sky") ********************* */
+
+    StringVal* sky_string = new StringVal("sky");
+    vector<Term*> args_sky_rapidnet;
+    args_sky_rapidnet.push_back(sky_string);
+
+    PredicateInstance* isblue_sky_rapidnet = new PredicateInstance(isblue_rapidnet, args_sky_rapidnet);
+
+
+    /* ******************************* CVC4 ******************************** */
+
+    Expr isblue_sky_cvc4 = parseFormula(&em, isblue_sky_rapidnet);
+
+
+    Expr exists_x__isblue_x_cvc4 = parseFormula(&em, exists_x__isblue_x_rapidnet);
+
+    /* **************************** CHECK SMT ******************************** */
+
+    std::cout << "\nSky not blue: "  << exists_x__isblue_x_cvc4 << smt.query(exists_x__isblue_x_cvc4) << std::endl;
+
+    smt.assertFormula(isblue_sky_cvc4);
+
+    std::cout  << "\nSky is blue: " << exists_x__isblue_x_cvc4 << smt.query(exists_x__isblue_x_cvc4) << std::endl;
+
+    clearAllVariables();
+}
 
 int main() {
     testIntegersArithmetic();
     testVariables();
     testBoundVariables();
+    testBoundPredicate();
     return 0;
 }
 
