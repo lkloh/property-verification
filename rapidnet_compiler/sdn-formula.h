@@ -29,6 +29,7 @@ using namespace std;
  */
 
 
+
 /*
  * Term
  */
@@ -67,18 +68,15 @@ public:
 
 	virtual ~Variable(){}
 
-	// TypeCode GetVariableType() {
-	// 	return varType;
-	// }
 	TypeCode GetVariableType();
 
-	string GetVariableName() {
-		return name;
-	}
+	
+	string GetVariableName();
 
-	bool GetFreeOrBound() {
-		return isbound;
-	}
+	// bool GetFreeOrBound() {
+	// 	return isbound;
+	// }
+	bool GetFreeOrBound();
 
 	void PrintTerm();
 
@@ -436,8 +434,9 @@ public:
 		LT,		//Smaller than
 	};
 
-	Constraint(Operator opt, Term* exprL, Term* exprR):
-		op(opt),leftE(exprL),rightE(exprR){}
+	// Constraint(Operator opt, Term* exprL, Term* exprR):
+	// 	op(opt),leftE(exprL),rightE(exprR){}
+	Constraint(Operator opt, Term* exprL, Term* exprR);
 
 	~Constraint();
 

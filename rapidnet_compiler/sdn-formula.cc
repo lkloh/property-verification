@@ -9,6 +9,9 @@
 
 /* *************************** CONSTRAINT ************************************** */
 
+Constraint::Constraint(Operator opt, Term* exprL, Term* exprR):
+    op(opt),leftE(exprL),rightE(exprR){}
+
 Constraint::~Constraint()
 {
 	delete leftE;
@@ -63,8 +66,16 @@ Variable::TypeCode Variable::GetVariableType() {
   return varType;
 }
 
+string Variable::GetVariableName() {
+  return name;
+}
+
 void Variable::PrintTerm() {
   cout << name;
+}
+
+bool Variable::GetFreeOrBound() {
+  return isbound;
 }
 
 /* **************************** VARIABLE ************************************** */
