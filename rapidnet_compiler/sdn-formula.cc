@@ -73,6 +73,30 @@ Formula* Quantifier::GetQuantifierFormula() {
 
 
 
+
+
+/* ************************* PredicateSchema ******************************** */
+
+PredicateSchema::PredicateSchema(string n, vector<Variable::TypeCode> t):
+  name(n),types(t){}
+
+PredicateSchema::~PredicateSchema(){}
+
+string PredicateSchema::GetName() {
+  return name;
+}
+
+vector<Variable::TypeCode>& PredicateSchema::GetTypes () {
+  return types;
+}
+
+/* ************************* PredicateSchema ******************************** */
+
+
+
+
+
+
 /* *************************** CONSTRAINT ************************************** */
 
 Constraint::Constraint(Operator opt, Term* exprL, Term* exprR):

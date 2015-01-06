@@ -343,18 +343,13 @@ private:
 class PredicateSchema
 {
 public:
-	PredicateSchema(string n, vector<Variable::TypeCode> t):
-		name(n),types(t){}
+	PredicateSchema(string n, vector<Variable::TypeCode> t);
 
-	virtual ~PredicateSchema(){}
+	virtual ~PredicateSchema();
 
-	string GetName() {
-		return name;
-	}
+	string GetName();
 
-	vector<Variable::TypeCode>& GetTypes () {
-		return types;
-	}
+	vector<Variable::TypeCode>& GetTypes();
 
 private:
 	string name;
