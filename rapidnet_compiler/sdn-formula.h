@@ -362,18 +362,13 @@ private:
 class PredicateInstance: public Formula
 {
 public:
-	PredicateInstance(PredicateSchema* s, vector<Term*> a):
-		schema(s),args(a){}
+	PredicateInstance(PredicateSchema* s, vector<Term*> a);
 
-	virtual ~PredicateInstance(){}
+	virtual ~PredicateInstance();
 
-	PredicateSchema* GetSchema() {
-		return schema;
-	}
+	PredicateSchema* GetSchema();
 
-	vector<Term*>& GetArgs() {
-		return args;
-	}
+	vector<Term*>& GetArgs();
 
 private:
 	PredicateSchema* schema;

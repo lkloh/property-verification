@@ -97,6 +97,33 @@ vector<Variable::TypeCode>& PredicateSchema::GetTypes () {
 
 
 
+
+
+/* ************************* PredicateInstance ******************************** */
+
+PredicateInstance::PredicateInstance(PredicateSchema* s, vector<Term*> a):
+  schema(s),args(a){}
+
+PredicateInstance::~PredicateInstance(){}
+
+PredicateSchema* PredicateInstance::GetSchema() {
+  return schema;
+}
+
+vector<Term*>& PredicateInstance::GetArgs() {
+  return args;
+}
+
+/* ************************* PredicateInstance ******************************** */
+
+
+
+
+
+
+
+
+
 /* *************************** CONSTRAINT ************************************** */
 
 Constraint::Constraint(Operator opt, Term* exprL, Term* exprR):
