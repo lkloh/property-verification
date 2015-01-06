@@ -240,6 +240,37 @@ void connective__x_gt_y__AND__y_gt_z__IMPLIES__x_gt_z() {
 }
 
 
+
+
+/*
+ * (4+3)-(2+1) = 4 
+ */
+void arithmetic__4_plus_3__minus__2_plus_1__equals__4() {
+    ExprManager em;
+    SmtEngine smt(&em);
+
+    /* RAPIDNET */
+    IntVal* one = new IntVal(1);
+    IntVal* two = new IntVal(2);
+    IntVal* three = new IntVal(3);
+    IntVal* four = new IntVal(4);
+
+    Arithmetic* four_plus_three = new Arithmetic(Arithmetic::PLUS, four, three); 
+    Arithmetic* two_plus_one = new Arithmetic(Arithmetic::PLUS, two, one);
+    Arithmetic* four_plus_three__minus__two_plus_one = new Arithmetic(Arithmetic::MINUS, four_plus_three, two_plus_one);
+    Constraint* equal_sides = new Constraint(Constraint::EQ, four_plus_three__minus__two_plus_one, four);
+
+    /* CVC4 */
+    Expr equal_sides_cvc4 = parseFormula(&em, equal_sides);
+
+    /* CHECKING PARSING */
+    std::cout << "\nTest" << equal_sides_cvc4 << " is: " << smt.query(equal_sides_cvc4) << std::endl;
+
+    clearAllVariables();
+}
+
+
+
 int main() {
     testIntegersArithmetic();
     testVariables();
@@ -247,6 +278,7 @@ int main() {
     testBoundPredicate();
     testArithmeticNestedQuantifier();
     connective__x_gt_y__AND__y_gt_z__IMPLIES__x_gt_z();
+    arithmetic__4_plus_3__minus__2_plus_1__equals__4();
     return 0;
 }
 

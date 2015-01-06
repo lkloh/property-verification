@@ -34,32 +34,6 @@ using namespace CVC4;
 
 
 
-/*
- * (4+3)-(2+1) = 4 
- */
-void arithmetic__4_plus_3__minus__2_plus_1__equals__4() {
-    ExprManager em;
-    SmtEngine smt(&em);
-
-    /* RAPIDNET */
-    IntVal one = IntVal(1);
-    IntVal two = IntVal(2);
-    IntVal three = IntVal(3);
-    IntVal four = IntVal(4);
-
-    Arithmetic four_plus_three = Arithmetic(Arithmetic::PLUS, &four, &three); 
-    Arithmetic two_plus_one = Arithmetic(Arithmetic::PLUS, &two, &one);
-    Arithmetic four_plus_three__minus__two_plus_one =  Arithmetic(Arithmetic::MINUS, &four_plus_three, &two_plus_one);
-    Constraint equal_sides = Constraint(Constraint::EQ, &four_plus_three__minus__two_plus_one, &four);
-
-    /* CVC4 */
-    Expr equal_sides_cvc4 = parseFormula(&em, &equal_sides);
-
-    /* CHECKING PARSING */
-    std::cout << "\nTest" << equal_sides_cvc4 << " is: " << smt.query(equal_sides_cvc4) << std::endl;
-
-    clearAllVariables();
-}
 
 /* ADAM is the ancestor of everyone 
  * Ancestor("LilyPotter", "HarryPotter") means LilyPotter is an ancestor of HarryPotter
