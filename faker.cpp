@@ -37,41 +37,7 @@ using namespace CVC4;
 
 
 
-/*
- * Function symbols testing
- * 
- */
-void quantifier__function_child_younger_than_mother() {
-    ExprManager em;
-    SmtEngine smt(&em);
 
-    /* ---------------------------- RAPIDNET ------------------------------ */
-    //mother
-    vector<Variable::TypeCode> domain_types;
-    domain_types.push_back(Variable::STRING);
-    FunctionSchema mother_schema = FunctionSchema("mother", domain_types, Variable::STRING);
-
-    //
-    vector<Term*> args;
-    StringVal MaliaObama = StringVal("MaliaObama");
-    args.push_back(&MaliaObama);
-    UserFunction mother_malia = UserFunction(&mother_schema, args);
-
-    StringVal MichelleObama = StringVal("MichelleObama");
-    StringVal BarbaraBush = StringVal("BarbaraBush");
-
-    Constraint michelle_is_mother_of_malia = Constraint(Constraint::EQ, &mother_malia, &MichelleObama);
-    Constraint barbara_is_mother_of_malia = Constraint(Constraint::EQ, &mother_malia, &BarbaraBush);
-
-    /* ------------------------------ CVC4 ------------------------------ */
-    Expr michelle_is_mother_of_malia_cvc4 = parseFormula(&em, &michelle_is_mother_of_malia);
-    Expr barbara_is_mother_of_malia_cvc4 = parseFormula(&em, &barbara_is_mother_of_malia);
-
-    smt.assertFormula(michelle_is_mother_of_malia_cvc4);
-    std::cout << "\nSince " << michelle_is_mother_of_malia_cvc4 << ", hence " << barbara_is_mother_of_malia_cvc4 << " is: " << smt.query(barbara_is_mother_of_malia_cvc4) << std::endl;
-
-    clearAllVariables();
-}
 
 /*
  * Function
