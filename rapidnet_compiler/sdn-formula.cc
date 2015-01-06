@@ -101,9 +101,24 @@ bool Variable::GetFreeOrBound() {
 
 /* ************************* FUNCTION SCHEMA ********************************** */
 
-void 
-FunctionSchema::PrintSchema()
-{
+FunctionSchema::FunctionSchema(string n, vector<Variable::TypeCode>& d, Variable::TypeCode r):
+  name(n),domain(d),range(r){}
+
+FunctionSchema::~FunctionSchema() {}
+
+string FunctionSchema::GetName() {
+  return name;
+}
+
+vector<Variable::TypeCode>& FunctionSchema::GetDomainTypes() {
+  return domain;
+}
+
+Variable::TypeCode FunctionSchema::GetRangeType() {
+  return range;
+}
+
+void FunctionSchema::PrintSchema() {
   cout << name;
 }
 

@@ -92,22 +92,15 @@ private:
 class FunctionSchema
 {
 public:
-	FunctionSchema(string n, vector<Variable::TypeCode> d, Variable::TypeCode r):
-		name(n),domain(d),range(r){}
+	FunctionSchema(string n, vector<Variable::TypeCode>& d, Variable::TypeCode r);
 
-	virtual ~FunctionSchema(){}
+	virtual ~FunctionSchema();
 
-	string GetName() {
-		return name;
-	}
+	string GetName();
 
-	vector<Variable::TypeCode>& GetDomainTypes () {
-		return domain;
-	}
+	vector<Variable::TypeCode>& GetDomainTypes();
 
-	Variable::TypeCode GetRangeType() {
-		return range;
-	}
+	Variable::TypeCode GetRangeType();
 
 	void PrintSchema();
 
